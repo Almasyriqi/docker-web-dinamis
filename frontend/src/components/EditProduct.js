@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const EditProduct = () => {
     const [title, setTitle] = useState('');
@@ -55,6 +56,7 @@ const EditProduct = () => {
 
                 <div className="field">
                     <button className="button is-primary">Update</button>
+                    <Link to={'/'} className='button is-danger ml-2'>Cancel</Link>
                 </div>
             </form>
         </div>

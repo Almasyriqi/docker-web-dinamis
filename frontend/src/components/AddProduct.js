@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const AddProduct = () => {
     const [title, setTitle] = useState('');
@@ -42,6 +43,7 @@ const AddProduct = () => {
 
                 <div className="field">
                     <button className="button is-primary">Save</button>
+                    <Link to={'/'} className='button is-danger ml-2'>Cancel</Link>
                 </div>
             </form>
         </div>

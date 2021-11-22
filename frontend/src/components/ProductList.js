@@ -38,7 +38,7 @@ const ProductList = () => {
                             <td>{product.title}</td>
                             <td>{product.price}</td>
                             <td>
-                                <Link to={`/edit/${product.id}`} className='button is-small is-info'>Edit</Link>
+                                <Link to={`/edit/${product.id}`} className='button is-small is-info mr-2'>Edit</Link>
                                 <button onClick={() => deleteProduct(product.id)} className='button is-small is-danger'>Delete</button>
                             </td>
                         </tr>
