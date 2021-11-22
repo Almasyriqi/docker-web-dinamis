@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import axios from 'axios';
+import api from '../service/api';
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 
@@ -10,7 +10,7 @@ const AddProduct = () => {
 
     const saveProduct = async (e) => {
         e.preventDefault();
-        await axios.post('http://localhost:4000/',{
+        await api.post('/',{
             title: title,
             price: price
         });

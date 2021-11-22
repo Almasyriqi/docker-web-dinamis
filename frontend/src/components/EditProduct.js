@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import axios from 'axios';
+import api from '../service/api';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Link } from "react-router-dom";
 
@@ -11,7 +11,7 @@ const EditProduct = () => {
 
     const updateProduct = async (e) => {
         e.preventDefault();
-        await axios.patch(`http://localhost:4000/${id}`, {
+        await api.patch(`/${id}`, {
             title: title,
             price: price
         });
@@ -24,7 +24,7 @@ const EditProduct = () => {
     },[]);
 
     const getProductById = async () => {
-        const response = await axios.get(`http://localhost:4000/${id}`);
+        const response = await api.get(`/${id}`);
         setTitle(response.data.title);
         setPrice(response.data.price);
     }
