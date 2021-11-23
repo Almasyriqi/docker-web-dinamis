@@ -1,7 +1,7 @@
 # Stage 1
 FROM node:14 as build-stage
 
-WORKDIR /frontend
+WORKDIR /frontend-ui
 COPY package.json .
 RUN npm install
 COPY . .
