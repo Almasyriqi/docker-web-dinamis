@@ -19,7 +19,7 @@ services:
   backend-api:
     depends_on:
       - mysqldb
-    build: ./backend-api
+    build: ./backend
     restart: unless-stopped
     env_file: ./.env
     ports:
@@ -38,7 +38,7 @@ services:
     depends_on:
       - backend-api
     build:
-      context: ./frontend-ui
+      context: ./frontend
       args:
         - REACT_APP_API_BASE_URL=$CLIENT_API_BASE_URL
     ports:
