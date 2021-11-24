@@ -33,7 +33,7 @@ jobs:
 
       - name: 'Install dependency nodejs'
         run: |
-          npm ci
+          npm install
         working-directory: ./backend
 
       - name: 'Login to Dockerhub'
