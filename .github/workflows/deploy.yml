@@ -105,15 +105,15 @@ jobs:
           echo "SSH not available..."
           done; echo "SSH ready!"
 
-       - name: 'Copy file .env'
-         uses: appleboy/scp-action@master
-         with:
-            host: ${{ env.INSTANCE_IP }}
-            username: opc
-            key: ${{ secrets.OCI_KEY_FILE }}
-            script: |
-              sudo cp .example.env .env
-            target: "./"
+      - name: 'Copy file .env'
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ env.INSTANCE_IP }}
+          username: opc
+          key: ${{ secrets.OCI_KEY_FILE }}
+          script: |
+            sudo cp .example.env .env
+          target: "./"
     
       # - name: 'Deploy Deployment Configuration'
       #   uses: appleboy/scp-action@master
