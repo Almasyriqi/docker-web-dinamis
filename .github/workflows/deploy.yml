@@ -31,10 +31,9 @@ jobs:
           yarn build
         working-directory: ./frontend
 
-      - name: 'Install dan build nodejs'
+      - name: 'Install dependency nodejs'
         run: |
           npm ci
-          npm build
         working-directory: ./backend
 
       - name: 'Login to Dockerhub'
