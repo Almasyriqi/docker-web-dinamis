@@ -123,6 +123,15 @@ jobs:
           source: "docker-compose.yml"
           target: "./"
 
+      - name: 'env Configuration'
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ env.INSTANCE_IP }}
+          username: opc
+          key: ${{ secrets.OCI_KEY_FILE }}
+          source: ".env"
+          target: "./"
+
       - name: 'Running Docker Compose'
         uses: appleboy/ssh-action@master
         with:
