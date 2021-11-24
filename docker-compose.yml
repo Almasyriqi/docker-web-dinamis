@@ -2,8 +2,10 @@ version: '3.8'
 
 services:
   mysqldb:
-    image: mysql:5.7
+    image: mysql:latest
     restart: unless-stopped
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: mysqlserver
     env_file: ./.env
     environment:
       - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
@@ -14,36 +16,42 @@ services:
     volumes:
       - db:/var/lib/mysql
       - .docker/project_react.sql:/docker-entrypoint-initdb.d/project_react.sql
+    cap_add:
+      - SYS_NICE  # CAP_SYS_NICE
     networks:
       - backend
   
   backend-api:
-    depends_on:
-      - mysqldb
     build: ./backend
+    container_name: backend-api
     restart: unless-stopped
     env_file: ./.env
     ports:
       - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
     environment:
-      - DB_HOST=mysqldb
+      - DB_HOST=172.20.0.2
       - DB_USER=$MYSQLDB_USER
       - DB_PASSWORD=$MYSQLDB_ROOT_PASSWORD
       - DB_NAME=$MYSQLDB_DATABASE
       - DB_PORT=$MYSQLDB_DOCKER_PORT
+    depends_on:
+      - mysqldb
+    stdin_open: true
+    tty: true
     networks:
       - backend
       - frontend
 
   frontend-ui:
-    depends_on:
-      - backend-api
+    container_name: frontend-ui
     build:
       context: ./frontend
       args:
         - REACT_APP_API_BASE_URL=$CLIENT_API_BASE_URL
     ports:
       - $REACT_LOCAL_PORT:$REACT_DOCKER_PORT
+    depends_on:
+      - backend-api
     networks:
       - frontend  
 
@@ -52,4 +60,10 @@ volumes:
 
 networks:
   backend:
+    name: backend-network
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.21.0.0/24
   frontend:
+    name: frontend-network
