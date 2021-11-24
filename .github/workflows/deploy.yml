@@ -148,7 +148,7 @@ jobs:
           host: ${{ env.INSTANCE_IP }}
           username: opc
           key: ${{ secrets.OCI_KEY_FILE }}
-          source: "./.docker/project_react.sql"
+          source: "project_react.sql"
           target: "./"
 
       - name: 'Running Docker Compose'
