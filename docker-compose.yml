@@ -22,7 +22,7 @@ services:
       - backend
   
   backend-api:
-    build: ./backend
+    image: riqi/backend-api:latest
     container_name: backend-api
     restart: unless-stopped
     env_file: ./.env
@@ -44,10 +44,9 @@ services:
 
   frontend-ui:
     container_name: frontend-ui
-    build:
-      context: ./frontend
-      args:
-        - REACT_APP_API_BASE_URL=$CLIENT_API_BASE_URL
+    image: riqi/react-web:latest
+    environment:
+      - REACT_APP_API_BASE_URL=$CLIENT_API_BASE_URL
     ports:
       - $REACT_LOCAL_PORT:$REACT_DOCKER_PORT
     depends_on:

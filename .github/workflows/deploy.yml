@@ -31,18 +31,29 @@ jobs:
           yarn build
         working-directory: ./frontend
 
+      - name: 'Install dan build nodejs'
+        run: |
+          yarn install
+          yarn build
+        working-directory: ./backend
+
       - name: 'Login to Dockerhub'
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: 'Build and push'
+      - name: 'Build and push react'
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/react-web .
           docker push ${{ secrets.DOCKERHUB_USERNAME}}/react-web
         working-directory: ./frontend
           
+      - name: 'Build and push nodejs'
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/backend-api .
+          docker push ${{ secrets.DOCKERHUB_USERNAME}}/backend-api
+        working-directory: ./backend
 
       - name: 'Write config'
         run: |
@@ -146,4 +157,4 @@ jobs:
             sudo firewall-cmd --zone=docker --add-service=http --permanent
             sudo firewall-cmd --reload
             sudo pip3 install docker-compose
-            sudo /usr/local/bin/docker-compose up -d --build
+            sudo /usr/local/bin/docker-compose up -d
