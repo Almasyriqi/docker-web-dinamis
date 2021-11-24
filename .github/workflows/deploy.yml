@@ -23,9 +23,9 @@ jobs:
 
       - name: 'Install dan build react'
         run: |
-          cd /frontend/
           yarn install
           yarn build
+        working-directory: ./frontend
 
       - name: 'Login to Dockerhub'
         uses: docker/login-action@v1
@@ -37,7 +37,8 @@ jobs:
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/react-web .
           docker push ${{ secrets.DOCKERHUB_USERNAME}}/react-web
-          cd ..
+        working-directory: ./frontend
+          
 
       - name: 'Write config'
         run: |
