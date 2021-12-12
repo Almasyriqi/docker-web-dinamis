@@ -1,47 +1,6 @@
 version: '3.8'
 
-services:
-  mysqldb:
-    image: mysql:latest
-    restart: unless-stopped
-    command: --default-authentication-plugin=mysql_native_password
-    container_name: mysqlserver
-    env_file: ./.env
-    environment:
-      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
-      - MYSQL_DATABASE=$MYSQLDB_DATABASE
-      - MYSQL_ROOT_HOST:'%'
-    ports:
-      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
-    volumes:
-      - db:/var/lib/mysql
-      - ./project_react.sql:/docker-entrypoint-initdb.d/project_react.sql
-    cap_add:
-      - SYS_NICE  # CAP_SYS_NICE
-    networks:
-      - backend
-  
-  backend-api:
-    image: riqi/backend-api:latest
-    container_name: backend-api
-    restart: unless-stopped
-    env_file: ./.env
-    ports:
-      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
-    environment:
-      - DB_HOST=172.20.0.2
-      - DB_USER=$MYSQLDB_USER
-      - DB_PASSWORD=$MYSQLDB_ROOT_PASSWORD
-      - DB_NAME=$MYSQLDB_DATABASE
-      - DB_PORT=$MYSQLDB_DOCKER_PORT
-    depends_on:
-      - mysqldb
-    stdin_open: true
-    tty: true
-    networks:
-      - backend
-      - frontend
-
+services:  
   frontend-ui:
     image: riqi/react-web:latest
     container_name: frontend-ui
@@ -54,8 +13,24 @@ services:
     networks:
       - frontend  
 
-volumes: 
-  db:
+  backend-api:
+    image: riqi/backend-api:latest
+    container_name: backend-api
+    restart: unless-stopped
+    env_file: ./.env
+    ports:
+      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
+    environment:
+      - DB_HOST=$MYSQLDB_HOST
+      - DB_USER=$MYSQLDB_USER
+      - DB_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - DB_NAME=$MYSQLDB_DATABASE
+      - DB_PORT=$MYSQLDB_DOCKER_PORT
+    stdin_open: true
+    tty: true
+    networks:
+      - backend
+      - frontend
 
 networks:
   backend:
