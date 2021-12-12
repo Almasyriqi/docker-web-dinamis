@@ -44,8 +44,8 @@ jobs:
 
       - name: 'Build and push react'
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/react-web .
-          docker push ${{ secrets.DOCKERHUB_USERNAME}}/react-web
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/react-web-dinamis .
+          docker push ${{ secrets.DOCKERHUB_USERNAME}}/react-web-dinamis
         working-directory: ./frontend
           
       - name: 'Build and push nodejs'
