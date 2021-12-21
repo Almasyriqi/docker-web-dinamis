@@ -142,28 +142,6 @@ jobs:
           source: ".env"
           target: "./"
 
-      - name: 'Copy sql file'
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ env.INSTANCE_IP }}
-          username: opc
-          key: ${{ secrets.OCI_KEY_FILE }}
-          source: "project_react.sql"
-          target: "./"
-
-      - name: 'Install mysql and import file sql'
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{env.INSTANCE_IP}}
-          username: opc
-          key: ${{secrets.OCI_KEY_FILE}}
-          script: |
-            sudo dnf install mysql-server
-            sudo systemctl start mysqld.service
-            sudo systemctl status mysqld
-            sudo systemctl enable mysqld
-            sudo mysql -u ${{secrets.MYSQL_USERNAME}} -h ${{secrets.MYSQL_HOST}} -p ${{secrets.MYSQL_PASSWORD}} < ~/project_react.sql
-
       - name: 'Running Docker Compose'
         uses: appleboy/ssh-action@master
         with:
@@ -178,4 +156,5 @@ jobs:
             sudo firewall-cmd --zone=docker --add-service=http --permanent
             sudo firewall-cmd --reload
             sudo pip3 install docker-compose
+            sudo docker rmi riqi//react-web-dinamis
             sudo /usr/local/bin/docker-compose up -d
