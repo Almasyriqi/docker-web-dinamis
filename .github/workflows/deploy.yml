@@ -21,8 +21,21 @@ jobs:
         with:
           node-version: '16'
 
-      - name: 'Copy .env file'
-        run: sudo cp .example.env .env
+      - name: 'Create .env file'
+        run: |
+          touch .env
+          echo MYSQLDB_HOST=${{ secrets.DB_HOST }} >> .env
+          echo MYSQLDB_USER=${{ secrets.DOCKERHUB_USERNAME }} >> .env
+          echo MYSQLDB_ROOT_PASSWORD=${{ secrets.DB_ROOT_PASSWORD }} >> .env
+          echo MYSQLDB_DATABASE=project_react >> .env
+          echo MYSQLDB_LOCAL_PORT=${{ secrets.DB_PORT }} >> .env
+          echo MYSQLDB_DOCKER_PORT=${{ secrets.DB_PORT }} >> .env
+          echo NODE_LOCAL_PORT=${{ secrets.NODE_PORT }} >> .env
+          echo NODE_DOCKER_PORT=${{ secrets.NODE_PORT }} >> .env
+          echo CLIENT_ORIGIN=${{ secrets.CLIENT_ORIGIN }} >> .env
+          echo CLIENT_API_BASE_URL=${{ secrets.CLIENT_API_BASE_URL }} >> .env
+          echo REACT_LOCAL_PORT=${{ secrets.REACT_PORT }} >> .env
+          echo REACT_DOCKER_PORT=${{ secrets.REACT_PORT }} >> .env
         working-directory: ./
 
       - name: 'Install dan build react'
