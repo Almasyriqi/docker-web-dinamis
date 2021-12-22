@@ -26,7 +26,7 @@ jobs:
           touch .env
           echo MYSQLDB_HOST=${{ secrets.DB_HOST }} >> .env
           echo MYSQLDB_USER=${{ secrets.DOCKERHUB_USERNAME }} >> .env
-          echo MYSQLDB_ROOT_PASSWORD=${{ secrets.MYSQL_PASSWORD }} >> .env
+          echo MYSQLDB_ROOT_PASSWORD=${{ secrets.MYSQL_PASSWORD }}";" >> .env
           echo MYSQLDB_DATABASE=project_react >> .env
           echo MYSQLDB_LOCAL_PORT=${{ secrets.DB_PORT }} >> .env
           echo MYSQLDB_DOCKER_PORT=${{ secrets.DB_PORT }} >> .env
