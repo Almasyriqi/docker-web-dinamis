@@ -156,5 +156,6 @@ jobs:
             sudo firewall-cmd --zone=docker --add-service=http --permanent
             sudo firewall-cmd --reload
             sudo pip3 install docker-compose
+            sudo /usr/local/bin/docker-compose down
             sudo docker rmi riqi/react-web-dinamis
             sudo /usr/local/bin/docker-compose up -d
