@@ -4,7 +4,6 @@ services:
   frontend-ui:
     image: riqi/react-web-dinamis:latest
     container_name: frontend-ui
-    env_file: ./.env
     environment:
       - REACT_APP_API_BASE_URL=$CLIENT_API_BASE_URL
     ports:
