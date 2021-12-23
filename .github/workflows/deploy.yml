@@ -38,16 +38,6 @@ jobs:
           echo REACT_DOCKER_PORT=${{ secrets.REACT_PORT }} >> .env
         working-directory: ./
 
-      - name: '.env file react'
-        run: |
-          touch .env
-          echo CLIENT_ORIGIN=${{ secrets.CLIENT_ORIGIN }} >> .env
-          echo CLIENT_API_BASE_URL=${{ secrets.CLIENT_API_BASE_URL }} >> .env
-          echo REACT_APP_API_BASE_URL=${{ secrets.CLIENT_API_BASE_URL }} >> .env
-          echo REACT_LOCAL_PORT=${{ secrets.REACT_PORT }} >> .env
-          echo REACT_DOCKER_PORT=${{ secrets.REACT_PORT }} >> .env
-        working-directory: ./frontend
-
       - name: 'Install dan build react'
         run: |
           yarn install
